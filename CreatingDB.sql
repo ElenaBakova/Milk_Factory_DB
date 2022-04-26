@@ -38,6 +38,7 @@ CREATE TABLE Product(
     Pack_ID           INTEGER      NOT NULL,
     Name	          VARCHAR(15)  NOT NULL,
     Price	          INTEGER      NOT NULL,
+	Manufacture_Date  DATETIME      DEFAULT GETDATE()    NOT NULL,
 CONSTRAINT Product_PK PRIMARY KEY (Product_ID)
 )
 ;
@@ -78,7 +79,7 @@ ALTER TABLE Client_Order ADD CONSTRAINT FK_Client_ID
     FOREIGN KEY (Client_ID)
     REFERENCES Client(Client_ID)
 ;
-ALTER TABLE Product ADD CONSTRAINT FK_Material_ID
+ALTER TABLE Product ADD CONSTRAINT FK_Material
     FOREIGN KEY (Material_ID)
     REFERENCES Material(Material_ID)
 ;
