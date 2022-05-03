@@ -43,7 +43,7 @@ CREATE TABLE Product(
     Pack_ID           INTEGER      NOT NULL,
     Product_Type_ID   INTEGER      NOT NULL,
     Name	          VARCHAR(15)  NOT NULL,
-    Volume			  INTEGER      NOT NULL,
+    Volume			  VARCHAR(15)      NOT NULL,
 	Manufacture_Date  DATETIME      DEFAULT GETDATE()    NOT NULL,
 CONSTRAINT Product_PK PRIMARY KEY (Product_ID)
 )
@@ -102,9 +102,9 @@ ALTER TABLE Product ADD CONSTRAINT FK_Product_Type_ID
 ---------------------------------------------------------------
 
 INSERT INTO Client(Client_ID, Name, Address) VALUES (1, 'Lenta', 'Gostilitskoye shosse 58, Petergof, St Petersburg, 198504');
-INSERT INTO Client(Client_ID, Name, Address) VALUES (2, 'Lenta', 'Moskovskoye shosse 14, St Petersburg, 196158');
-INSERT INTO Client(Client_ID, Name, Address) VALUES (3, 'Lenta', 'Planernaya Ulitsa, 17, St Petersburg, 197374');
-INSERT INTO Client(Client_ID, Name, Address) VALUES (4, 'Lenta', 'Piskarovskiy Ave, 59, St Petersburg, 195067');
+INSERT INTO Client(Client_ID, Name, Address) VALUES (2, 'Pyaterochka', 'Moskovskoye shosse 14, St Petersburg, 196158');
+INSERT INTO Client(Client_ID, Name, Address) VALUES (3, 'Supermarket', 'Planernaya Ulitsa, 17, St Petersburg, 197374');
+INSERT INTO Client(Client_ID, Name, Address) VALUES (4, 'Svetofor', 'Piskarovskiy Ave, 59, St Petersburg, 195067');
 INSERT INTO Client(Client_ID, Name, Address) VALUES (5, 'Prisma', 'Bolshoy Prospekt Vasilyevskogo Ostrova, 62, St Petersburg, 199106');
 INSERT INTO Client(Client_ID, Name, Address) VALUES (6, 'Perekrestok', 'Ligovsky Ave, 30, St Petersburg, 191040');
 INSERT INTO Client(Client_ID, Name, Address) VALUES (7, 'Dixy', 'Pushkinskaya Ulitsa, 20, St Petersburg, 191040');
@@ -124,8 +124,7 @@ INSERT INTO Material(Material_ID, Name, Price) VALUES (1, 'Normalized Milk', 40)
 INSERT INTO Material(Material_ID, Name, Price) VALUES (2, 'Whole Milk', 35);
 INSERT INTO Material(Material_ID, Name, Price) VALUES (3, 'Nonfat Dry Milk', 85);
 INSERT INTO Material(Material_ID, Name, Price) VALUES (4, 'Cream', 120);
-INSERT INTO Material(Material_ID, Name, Price) VALUES (5, 'Ferment', 15);
-INSERT INTO Material(Material_ID, Name, Price) VALUES (6, 'Cottage Cheese', 100);
+INSERT INTO Material(Material_ID, Name, Price) VALUES (5, 'Cottage Cheese', 100);
 
 INSERT INTO Pack(Pack_ID, Pack_Type) VALUES (1, 'Tetrapack');
 INSERT INTO Pack(Pack_ID, Pack_Type) VALUES (2, 'Plastic');
@@ -138,13 +137,44 @@ INSERT INTO Product_Type(Product_Type_ID, Name) VALUES (3, 'Sour Cream');
 INSERT INTO Product_Type(Product_Type_ID, Name) VALUES (4, 'Yogurt');
 INSERT INTO Product_Type(Product_Type_ID, Name) VALUES (5, 'Ice Cream');
 
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) VALUES (1, 'Milk');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) VALUES (2, 'Cheese');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) VALUES (3, 'Sour cream');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) VALUES (4, 'Yogurt');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) VALUES (5, 'Condensed milk');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) VALUES (6, 'Cream');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) VALUES (7, 'Butter');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) 
+VALUES (1, 1, 1, 1, 'Milk 2,5%', '900 ml');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) 
+VALUES (2, 2, 3, 1, 'Milk 3,2%', '5000 ml');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) 
+VALUES (3, 4, 2, 3, 'Sour cream 15%', '300 g', '03-05-2022');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) 
+VALUES (4, 5, 2, 4, 'Yogurt', '200 g', '01-05-2022');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) 
+VALUES (5, 2, 4, 2, 'Camembert', '1000 g', '12-12-2021');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) 
+VALUES (6, 4, 4, 5, 'Ice Cream', '50 g', '30-04-2022');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Volume, Manufacture_Date) 
+VALUES (7, 2, 4, 2, 'Gouda', '1000 g', '12-12-2021');
+
+INSERT INTO Factory_Order(Order_ID, Material_ID, Supplier_ID, Amount, Date_Order)
+VALUES (1, 1, 7, 200, '30-04-2022')
+INSERT INTO Factory_Order(Order_ID, Material_ID, Supplier_ID, Amount, Date_Order)
+VALUES (2, 2, 3, 200, '30-04-2022')
+INSERT INTO Factory_Order(Order_ID, Material_ID, Supplier_ID, Amount, Date_Order)
+VALUES (3, 3, 1, 500, '25-04-2022')
+INSERT INTO Factory_Order(Order_ID, Material_ID, Supplier_ID, Amount, Date_Order)
+VALUES (4, 4, 5, 1000, '28-04-2022')
+INSERT INTO Factory_Order(Order_ID, Material_ID, Supplier_ID, Amount, Date_Order)
+VALUES (5, 5, 7, 150, '29-04-2022')
+INSERT INTO Factory_Order(Order_ID, Material_ID, Supplier_ID, Amount, Date_Order)
+VALUES (6, 5, 7, 250, '09-04-2022')
+
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (1, 7, 5, 500, '15-04-2022')
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (2, 3, 5, 200, '30-04-2022')
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (3, 2, 5, 300, '25-04-2022')
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (4, 4, 2, 1000, '28-04-2022')
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (5, 5, 1, 150, '29-04-2022')
 
 ---------------------------------------------------------------
 -- Удаление таблиц 
