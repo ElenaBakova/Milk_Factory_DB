@@ -43,7 +43,6 @@ CREATE TABLE Product(
     Pack_ID           INTEGER      NOT NULL,
     Product_Type_ID   INTEGER      NOT NULL,
     Name	          VARCHAR(15)  NOT NULL,
-	Manufacture_Date  DATE      DEFAULT GETDATE()    NOT NULL,
 CONSTRAINT Product_PK PRIMARY KEY (Product_ID)
 )
 ;
@@ -70,7 +69,7 @@ CONSTRAINT Client_Order_PK PRIMARY KEY (Order_ID)
 ---------------------------------------------------------------
 ALTER TABLE Factory_Order ADD CONSTRAINT FK_Material_ID
     FOREIGN KEY (Material_ID)
-    REFERENCES Material(Material_ID)
+    REFERENCES Material(Material_ID) ON DELETE CASCADE
 ;
 ALTER TABLE Factory_Order ADD CONSTRAINT FK_Supplier_ID
     FOREIGN KEY (Supplier_ID)
@@ -78,11 +77,11 @@ ALTER TABLE Factory_Order ADD CONSTRAINT FK_Supplier_ID
 ;
 ALTER TABLE Client_Order ADD CONSTRAINT FK_Product_ID
     FOREIGN KEY (Product_ID)
-    REFERENCES Product(Product_ID)
+    REFERENCES Product(Product_ID) ON DELETE CASCADE
 ;
 ALTER TABLE Client_Order ADD CONSTRAINT FK_Client_ID
     FOREIGN KEY (Client_ID)
-    REFERENCES Client(Client_ID)
+    REFERENCES Client(Client_ID) ON DELETE CASCADE
 ;
 ALTER TABLE Product ADD CONSTRAINT FK_Material
     FOREIGN KEY (Material_ID)
@@ -94,8 +93,17 @@ ALTER TABLE Product ADD CONSTRAINT FK_Pack_ID
 ;
 ALTER TABLE Product ADD CONSTRAINT FK_Product_Type_ID
     FOREIGN KEY (Product_Type_ID)
-    REFERENCES Product_Type(Product_Type_ID)
+    REFERENCES Product_Type(Product_Type_ID) ON DELETE CASCADE
 ;
+
+-----------------------------------------------------------------
+-- Добавление индексов
+-----------------------------------------------------------------
+CREATE INDEX product_type_idx ON Product(Product_Type_ID);
+CREATE INDEX material_idx ON Product(Material_ID);
+CREATE INDEX supplier_in_order_idx ON Factory_Order(Supplier_ID);
+CREATE INDEX client_in_order_idx ON Client_Order(Client_ID);
+
 ---------------------------------------------------------------
 -- Заполнение таблиц тестовыми данными
 ---------------------------------------------------------------
@@ -137,20 +145,20 @@ INSERT INTO Product_Type(Product_Type_ID, Name) VALUES (3, 'Sour Cream');
 INSERT INTO Product_Type(Product_Type_ID, Name) VALUES (4, 'Yogurt');
 INSERT INTO Product_Type(Product_Type_ID, Name) VALUES (5, 'Ice Cream');
 
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Manufacture_Date) 
-VALUES (1, 1, 1, 1, 'Milk 2,5%', '19-12-2021');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Manufacture_Date) 
-VALUES (2, 2, 3, 1, 'Milk 3,2%', '10-12-2021');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Manufacture_Date) 
-VALUES (3, 4, 2, 3, 'Sour cream 15%', '03-05-2022');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Manufacture_Date) 
-VALUES (4, 5, 2, 4, 'Yogurt', '01-05-2022');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Manufacture_Date) 
-VALUES (5, 2, 4, 2, 'Camembert', '12-12-2021');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Manufacture_Date) 
-VALUES (6, 4, 4, 5, 'Ice Cream', '30-04-2022');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Manufacture_Date) 
-VALUES (7, 2, 4, 2, 'Gouda', '12-12-2021');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
+VALUES (1, 1, 1, 1, 'Milk 2,5%');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
+VALUES (2, 2, 3, 1, 'Milk 3,2%');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
+VALUES (3, 4, 2, 3, 'Sour cream 15%');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
+VALUES (4, 5, 2, 4, 'Yogurt');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
+VALUES (5, 2, 4, 2, 'Camembert');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
+VALUES (6, 4, 4, 5, 'Ice Cream');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
+VALUES (7, 2, 4, 2, 'Gouda');
 
 INSERT INTO Factory_Order(Order_ID, Material_ID, Supplier_ID, Amount, Date_Order)
 VALUES (1, 1, 7, 200, '30-04-2022')
@@ -172,15 +180,20 @@ VALUES (2, 3, 5, 200, '30-04-2022')
 INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
 VALUES (3, 2, 5, 300, '25-04-2022')
 INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
-VALUES (4, 4, 2, 1000, '28-04-2022')
+VALUES (4, 4, 2, 1000, '28-04-2020')
 INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
-VALUES (5, 5, 1, 150, '29-04-2022')
+VALUES (5, 5, 1, 150, '29-04-2020')
 
 ---------------------------------------------------------------
 -- Удаление таблиц 
 ---------------------------------------------------------------
 
 /*
+DROP INDEX product_type_idx ON Product;
+DROP INDEX material_idx ON Product;
+DROP INDEX supplier_in_order_idx ON Factory_Order;
+DROP INDEX client_in_order_idx ON Client_Order;
+
 DROP TABLE Factory_Order;
 DROP TABLE Client_Order;
 DROP TABLE Supplier;
