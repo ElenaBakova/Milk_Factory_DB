@@ -8,7 +8,8 @@ CREATE TABLE Material(
     Material_ID   INTEGER      NOT NULL		UNIQUE,
     Price         INTEGER      NOT NULL,
     Name	      VARCHAR(20)  NOT NULL,
-CONSTRAINT Material_PK PRIMARY KEY (Material_ID)
+CONSTRAINT Material_PK PRIMARY KEY (Material_ID),
+CONSTRAINT Material_Price CHECK (Price > 0)
 )
 ;
 CREATE TABLE Pack(
@@ -43,7 +44,9 @@ CREATE TABLE Product(
     Pack_ID           INTEGER      NOT NULL,
     Product_Type_ID   INTEGER      NOT NULL,
     Name	          VARCHAR(15)  NOT NULL,
-CONSTRAINT Product_PK PRIMARY KEY (Product_ID)
+	Price			  INTEGER      NOT NULL,
+CONSTRAINT Product_PK PRIMARY KEY (Product_ID),
+CONSTRAINT Product_Price CHECK (Price > 0)
 )
 ;
 CREATE TABLE Factory_Order(
@@ -52,7 +55,10 @@ CREATE TABLE Factory_Order(
     Supplier_ID         INTEGER       NOT NULL,
     Date_Order          DATE     DEFAULT GETDATE()    NOT NULL,
     Amount	            INTEGER	      NOT NULL,
-CONSTRAINT Factory_Order_PK PRIMARY KEY (Order_ID)
+	Cost				INTEGER
+CONSTRAINT Factory_Order_PK PRIMARY KEY (Order_ID),
+CONSTRAINT Order_Cost CHECK (Cost > 0),
+CONSTRAINT Order_Amount CHECK (Amount > 0)
 )
 ;
 CREATE TABLE Client_Order(
@@ -61,7 +67,10 @@ CREATE TABLE Client_Order(
     Client_ID           INTEGER       NOT NULL,
     Date_Order          DATE      DEFAULT GETDATE()    NOT NULL,
     Amount	            INTEGER	      NOT NULL,
-CONSTRAINT Client_Order_PK PRIMARY KEY (Order_ID)
+	Cost				INTEGER
+CONSTRAINT Client_Order_PK PRIMARY KEY (Order_ID),
+CONSTRAINT Client_Order_Cost CHECK (Cost > 0),
+CONSTRAINT Client_Order_Amount CHECK (Amount > 0)
 )
 ;
 ---------------------------------------------------------------
@@ -131,8 +140,8 @@ INSERT INTO Supplier(Supplier_ID, Name, State) VALUES (9, 'Nestle Food', 'Republ
 INSERT INTO Material(Material_ID, Name, Price) VALUES (1, 'Normalized Milk', 40);
 INSERT INTO Material(Material_ID, Name, Price) VALUES (2, 'Whole Milk', 35);
 INSERT INTO Material(Material_ID, Name, Price) VALUES (3, 'Nonfat Dry Milk', 85);
-INSERT INTO Material(Material_ID, Name, Price) VALUES (4, 'Cream', 120);
-INSERT INTO Material(Material_ID, Name, Price) VALUES (5, 'Cottage Cheese', 100);
+INSERT INTO Material(Material_ID, Name, Price) VALUES (4, 'Cream', 40);
+INSERT INTO Material(Material_ID, Name, Price) VALUES (5, 'Cottage Cheese', 60);
 
 INSERT INTO Pack(Pack_ID, Pack_Type) VALUES (1, 'Tetrapack');
 INSERT INTO Pack(Pack_ID, Pack_Type) VALUES (2, 'Plastic');
@@ -145,20 +154,13 @@ INSERT INTO Product_Type(Product_Type_ID, Name) VALUES (3, 'Sour Cream');
 INSERT INTO Product_Type(Product_Type_ID, Name) VALUES (4, 'Yogurt');
 INSERT INTO Product_Type(Product_Type_ID, Name) VALUES (5, 'Ice Cream');
 
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
-VALUES (1, 1, 1, 1, 'Milk 2,5%');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
-VALUES (2, 2, 3, 1, 'Milk 3,2%');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
-VALUES (3, 4, 2, 3, 'Sour cream 15%');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
-VALUES (4, 5, 2, 4, 'Yogurt');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
-VALUES (5, 2, 4, 2, 'Camembert');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
-VALUES (6, 4, 4, 5, 'Ice Cream');
-INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name) 
-VALUES (7, 2, 4, 2, 'Gouda');
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Price) VALUES (1, 1, 1, 1, 'Milk 2,5%', 80);
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Price) VALUES (2, 2, 3, 1, 'Milk 3,2%', 85);
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Price) VALUES (3, 4, 2, 3, 'Sour cream 15%', 75);
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Price) VALUES (4, 5, 2, 4, 'Yogurt', 120);
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Price) VALUES (5, 2, 4, 2, 'Camembert', 200);
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Price) VALUES (6, 4, 4, 5, 'Ice Cream', 90);
+INSERT INTO Product(Product_ID, Material_ID, Pack_ID, Product_Type_ID, Name, Price) VALUES (7, 2, 4, 2, 'Gouda', 250);
 
 INSERT INTO Factory_Order(Order_ID, Material_ID, Supplier_ID, Amount, Date_Order)
 VALUES (1, 1, 7, 200, '30-04-2022')
