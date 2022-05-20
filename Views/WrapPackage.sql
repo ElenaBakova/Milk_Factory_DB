@@ -1,10 +1,10 @@
 ﻿-------------------------------------------------------------------------------------------------
 -- Продукты в пластиковой таре (название продукта, тип)
 -------------------------------------------------------------------------------------------------
-CREATE VIEW V_Plastic_Package (Name, Product_Type)
+CREATE VIEW V_Wrap_Package (ID, Name, Product_Type)
 AS
-SELECT Product.Name, Product_Type.Name FROM Product
+SELECT Product.Product_ID, Product.Name, Product_Type.Name FROM Product
   JOIN Product_Type ON Product_Type.Product_Type_ID = Product.Product_Type_ID
-  JOIN Pack ON Pack.Pack_ID = Product.Pack_ID WHERE Pack.Pack_Type = 'Plastic';
+  JOIN Pack ON Pack.Pack_ID = Product.Pack_ID WHERE Pack.Pack_Type = 'Wrap';
 
---DROP VIEW V_Plastic_Package
+--DROP VIEW V_Wrap_Package

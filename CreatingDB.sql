@@ -82,7 +82,7 @@ ALTER TABLE Factory_Order ADD CONSTRAINT FK_Material_ID
 ;
 ALTER TABLE Factory_Order ADD CONSTRAINT FK_Supplier_ID
     FOREIGN KEY (Supplier_ID)
-    REFERENCES Supplier(Supplier_ID)
+    REFERENCES Supplier(Supplier_ID) ON DELETE CASCADE
 ;
 ALTER TABLE Client_Order ADD CONSTRAINT FK_Product_ID
     FOREIGN KEY (Product_ID)
@@ -90,7 +90,7 @@ ALTER TABLE Client_Order ADD CONSTRAINT FK_Product_ID
 ;
 ALTER TABLE Client_Order ADD CONSTRAINT FK_Client_ID
     FOREIGN KEY (Client_ID)
-    REFERENCES Client(Client_ID) ON DELETE CASCADE
+    REFERENCES Client(Client_ID)
 ;
 ALTER TABLE Product ADD CONSTRAINT FK_Material
     FOREIGN KEY (Material_ID)
