@@ -185,6 +185,18 @@ INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
 VALUES (4, 4, 2, 1000, '28-04-2020')
 INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
 VALUES (5, 5, 1, 150, '29-04-2020')
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (6, 2, 5, 250, '25-04-2021')
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (7, 4, 2, 800, '28-04-2021')
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (8, 5, 1, 100, '15-04-2021')
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (9, 5, 1, 50, '08-03-2021')
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (10, 5, 1, 200, '29-05-2021')
+INSERT INTO Client_Order(Order_ID, Product_ID, Client_ID, Amount, Date_Order)
+VALUES (11, 4, 2, 860, '18-05-2020')
 
 ---------------------------------------------------------------
 -- Удаление таблиц 
