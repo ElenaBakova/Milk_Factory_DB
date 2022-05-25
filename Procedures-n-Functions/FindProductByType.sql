@@ -10,3 +10,5 @@ RETURN
     JOIN Product_Type ON Product_Type.Product_Type_ID = Product.Product_Type_ID
   WHERE Product_Type.Name = @product_type
 );
+
+-- SELECT * FROM FindProductByType('Cheese')
